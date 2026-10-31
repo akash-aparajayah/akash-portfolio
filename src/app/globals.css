@@ -1,0 +1,174 @@
+@import "tailwindcss";
+
+:root {
+  color-scheme: light;
+  --bg: #e6eaf4;
+  --surface: #ffffff;
+  --line: rgba(30, 41, 90, 0.14);
+  --fg: #0c1230;
+  --muted: #4a5478;
+  --accent: #4338ca;
+  --accent-ink: #ffffff;
+
+  --glass-bg: rgba(255, 255, 255, 0.58);
+  --glass-soft: rgba(255, 255, 255, 0.42);
+  --glass-border: rgba(255, 255, 255, 0.78);
+  --glass-shadow: 0 8px 32px rgba(31, 41, 100, 0.12);
+  --orb-1: rgba(129, 140, 248, 0.58);
+  --orb-2: rgba(103, 232, 249, 0.48);
+  --orb-3: rgba(244, 168, 216, 0.5);
+  --grain: rgba(15, 21, 53, 0.045);
+}
+
+[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: #05070e;
+  --surface: #101624;
+  --line: rgba(255, 255, 255, 0.12);
+  --fg: #f2f4ff;
+  --muted: #9aa6c4;
+  --accent: #a5b4fc;
+  --accent-ink: #0b1030;
+
+  --glass-bg: rgba(255, 255, 255, 0.055);
+  --glass-soft: rgba(255, 255, 255, 0.04);
+  --glass-border: rgba(255, 255, 255, 0.13);
+  --glass-shadow: 0 10px 40px rgba(0, 0, 0, 0.45);
+  --orb-1: rgba(99, 102, 241, 0.5);
+  --orb-2: rgba(34, 211, 238, 0.28);
+  --orb-3: rgba(217, 70, 239, 0.32);
+  --grain: rgba(255, 255, 255, 0.035);
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-line: var(--line);
+  --color-fg: var(--fg);
+  --color-muted: var(--muted);
+  --color-accent: var(--accent);
+  --color-accent-ink: var(--accent-ink);
+  --font-display: var(--font-bricolage), system-ui, sans-serif;
+  --font-sans: var(--font-public), system-ui, sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 6rem;
+}
+
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.glass {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--glass-shadow);
+  -webkit-backdrop-filter: blur(20px) saturate(160%);
+  backdrop-filter: blur(20px) saturate(160%);
+}
+
+.glass-soft {
+  background: var(--glass-soft);
+  border: 1px solid var(--glass-border);
+  -webkit-backdrop-filter: blur(12px) saturate(140%);
+  backdrop-filter: blur(12px) saturate(140%);
+}
+
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .glass,
+  .glass-soft {
+    background: var(--surface);
+  }
+}
+
+.bg-orbs {
+  position: fixed;
+  inset: -12%;
+  z-index: -10;
+  pointer-events: none;
+  background:
+    radial-gradient(42rem 42rem at 8% 0%, var(--orb-1), transparent 60%),
+    radial-gradient(38rem 38rem at 95% 28%, var(--orb-2), transparent 60%),
+    radial-gradient(44rem 44rem at 25% 100%, var(--orb-3), transparent 60%);
+  animation: orb-drift 28s ease-in-out infinite;
+}
+
+.bg-grain {
+  position: fixed;
+  inset: 0;
+  z-index: -9;
+  pointer-events: none;
+  opacity: 1;
+  background-image: radial-gradient(var(--grain) 0.6px, transparent 0.6px);
+  background-size: 3px 3px;
+}
+
+.card-lift {
+  transition:
+    transform 0.35s ease,
+    box-shadow 0.35s ease,
+    border-color 0.35s ease;
+}
+
+.card-lift:hover {
+  transform: translateY(-4px);
+  border-color: color-mix(in oklab, var(--accent) 45%, var(--glass-border));
+  box-shadow: 0 18px 40px color-mix(in oklab, var(--accent) 18%, transparent);
+}
+
+.text-gradient {
+  background: linear-gradient(120deg, var(--accent), #22d3ee 55%, #f0abfc);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.avatar-ring {
+  box-shadow:
+    0 0 0 1px color-mix(in oklab, var(--accent) 35%, transparent),
+    0 0 28px color-mix(in oklab, var(--accent) 28%, transparent);
+}
+
+@keyframes orb-drift {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(3%, 2.5%, 0) scale(1.04);
+  }
+}
+
+::selection {
+  background: var(--accent);
+  color: var(--accent-ink);
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  body {
+    transition: none;
+  }
+  .bg-orbs {
+    animation: none;
+  }
+  .card-lift,
+  .card-lift:hover {
+    transition: none;
+    transform: none;
+  }
+}
