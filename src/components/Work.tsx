@@ -12,37 +12,50 @@ export default function Work() {
   return (
     <Section
       id="work"
+      index="01"
       title="Work"
       intro="What each project needed, what I built, and the decisions behind it."
     >
-      <div className="space-y-6">
+      <div className="space-y-5">
         <Reveal>
-          <article className="group glass-soft card-lift overflow-hidden rounded-2xl">
+          <article className="group glass-soft card-lift overflow-hidden rounded-[1.6rem]">
             <Link href={`/work/${featured.slug}`} className="block">
-              <ProjectImage
-                src={featured.image}
-                alt={`${featured.title} product frame`}
-                className="aspect-[16/9]"
-              />
-              <div className="grid gap-6 p-6 lg:grid-cols-[1fr_1.2fr] lg:gap-10">
+              <div className="relative">
+                <ProjectImage
+                  src={featured.image}
+                  alt={`${featured.title} product frame`}
+                  className="aspect-[16/9]"
+                />
+                <span className="absolute left-4 top-4 rounded-full bg-accent px-3 py-1 text-xs font-medium text-accent-ink">
+                  Featured
+                </span>
+              </div>
+              <div className="grid gap-6 p-6 lg:grid-cols-[1fr_1.15fr] lg:gap-10 lg:p-8">
                 <header>
                   <p className="text-sm text-accent">
                     {featured.status} · {featured.year}
                   </p>
-                  <h3 className="mt-1 font-display text-3xl font-semibold">{featured.title}</h3>
+                  <h3 className="mt-2 font-display text-3xl font-semibold tracking-tight">
+                    {featured.title}
+                  </h3>
                   <p className="mt-2 text-muted">{featured.tagline}</p>
-                  <p className="mt-4 inline-flex items-center gap-2 text-sm">
-                    Read case study <ArrowUpRight size={14} aria-hidden />
+                  <p className="mt-5 inline-flex items-center gap-2 text-sm font-medium">
+                    Read case study
+                    <ArrowUpRight
+                      size={14}
+                      aria-hidden
+                      className="transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+                    />
                   </p>
                 </header>
-                <dl className="space-y-4 text-[15px] leading-relaxed">
+                <dl className="space-y-5 text-[15px] leading-relaxed">
                   <div>
-                    <dt className="font-medium">Problem</dt>
-                    <dd className="mt-1 text-muted">{featured.problem}</dd>
+                    <dt className="kicker">Problem</dt>
+                    <dd className="mt-2 text-muted">{featured.problem}</dd>
                   </div>
                   <div>
-                    <dt className="font-medium">Outcome</dt>
-                    <dd className="mt-1 text-muted">{featured.outcome}</dd>
+                    <dt className="kicker">Outcome</dt>
+                    <dd className="mt-2 text-muted">{featured.outcome}</dd>
                   </div>
                 </dl>
               </div>
@@ -50,30 +63,45 @@ export default function Work() {
           </article>
         </Reveal>
 
-        {rest.map((project, index) => (
-          <Reveal key={project.slug} delay={0.08 * (index + 1)}>
-            <article className="group glass-soft card-lift overflow-hidden rounded-2xl">
-              <Link href={`/work/${project.slug}`} className="grid gap-0 lg:grid-cols-[1fr_1.4fr]">
-                <ProjectImage
-                  src={project.image}
-                  alt={`${project.title} product frame`}
-                  className="aspect-[16/10] lg:min-h-full"
-                />
-                <div className="p-6">
-                  <p className="text-sm text-accent">
-                    {project.status} · {project.year}
-                  </p>
-                  <h3 className="mt-1 font-display text-2xl font-semibold">{project.title}</h3>
-                  <p className="mt-2 text-muted">{project.tagline}</p>
-                  <p className="mt-4 text-sm text-muted">{project.stack.join(" · ")}</p>
-                  <p className="mt-4 inline-flex items-center gap-2 text-sm">
-                    Read case study <ArrowUpRight size={14} aria-hidden />
-                  </p>
-                </div>
-              </Link>
-            </article>
-          </Reveal>
-        ))}
+        <div className="grid gap-5 lg:grid-cols-2">
+          {rest.map((project, index) => (
+            <Reveal key={project.slug} delay={0.08 * (index + 1)}>
+              <article className="group glass-soft card-lift flex h-full flex-col overflow-hidden rounded-[1.6rem]">
+                <Link href={`/work/${project.slug}`} className="flex h-full flex-col">
+                  <ProjectImage
+                    src={project.image}
+                    alt={`${project.title} product frame`}
+                    className="aspect-[16/10]"
+                  />
+                  <div className="flex flex-1 flex-col p-6">
+                    <p className="text-sm text-accent">
+                      {project.status} · {project.year}
+                    </p>
+                    <h3 className="mt-2 font-display text-2xl font-semibold tracking-tight">
+                      {project.title}
+                    </h3>
+                    <p className="mt-2 text-muted">{project.tagline}</p>
+                    <ul className="mt-4 flex flex-wrap gap-2">
+                      {project.stack.map((item) => (
+                        <li key={item} className="chip rounded-full px-2.5 py-1 text-xs">
+                          {item}
+                        </li>
+                      ))}
+                    </ul>
+                    <p className="mt-auto pt-5 inline-flex items-center gap-2 text-sm font-medium">
+                      Read case study
+                      <ArrowUpRight
+                        size={14}
+                        aria-hidden
+                        className="transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+                      />
+                    </p>
+                  </div>
+                </Link>
+              </article>
+            </Reveal>
+          ))}
+        </div>
       </div>
     </Section>
   );

@@ -1,6 +1,7 @@
 "use client";
 
-import { motion, useReducedMotion } from "motion/react";
+import { motion } from "motion/react";
+import usePrefersReducedMotion from "@/hooks/usePrefersReducedMotion";
 import { MapPin } from "lucide-react";
 import Section from "./Section";
 import { experience } from "@/data/experience";
@@ -37,11 +38,12 @@ const contentVariants = {
 };
 
 export default function Experience({ years }: { years: number }) {
-  const reduce = useReducedMotion();
+  const reduce = usePrefersReducedMotion();
 
   return (
     <Section
       id="experience"
+      index="04"
       title="Experience"
       intro={`${years}+ years building software.`}
     >

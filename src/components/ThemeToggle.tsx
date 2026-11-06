@@ -2,7 +2,8 @@
 
 import { useRef, useSyncExternalStore } from "react";
 import { flushSync } from "react-dom";
-import { AnimatePresence, motion, useReducedMotion } from "motion/react";
+import { AnimatePresence, motion } from "motion/react";
+import usePrefersReducedMotion from "@/hooks/usePrefersReducedMotion";
 import { useTheme } from "next-themes";
 import { Moon, Sun } from "lucide-react";
 
@@ -14,7 +15,7 @@ type ViewTransitionDoc = {
 
 export default function ThemeToggle() {
   const { resolvedTheme, setTheme } = useTheme();
-  const reduce = useReducedMotion();
+  const reduce = usePrefersReducedMotion();
   const buttonRef = useRef<HTMLButtonElement>(null);
   // false on the server, true in the browser: avoids a hydration mismatch.
   const mounted = useSyncExternalStore(

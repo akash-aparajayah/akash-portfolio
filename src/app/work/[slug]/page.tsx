@@ -38,8 +38,8 @@ export default async function WorkPage({
   if (!project) notFound();
 
   return (
-    <main className="mx-auto max-w-5xl px-6 py-10 md:py-14">
-      <article className="glass overflow-hidden rounded-3xl">
+    <main className="mx-auto max-w-6xl px-6 py-10 md:py-14">
+      <article className="glass overflow-hidden rounded-[2rem]">
         <ProjectImage
           src={project.image}
           alt={`${project.title} product frame`}

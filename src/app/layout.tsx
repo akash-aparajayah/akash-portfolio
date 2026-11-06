@@ -4,6 +4,7 @@ import { Analytics } from "@vercel/analytics/next";
 import ThemeProvider from "@/components/ThemeProvider";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import PointerGlow from "@/components/PointerGlow";
 import { site } from "@/data/site";
 import "./globals.css";
 
@@ -58,9 +59,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       suppressHydrationWarning
       className={`${bricolage.variable} ${publicSans.variable}`}
     >
-      <body>
+      <body suppressHydrationWarning>
         <div aria-hidden className="bg-orbs" />
+        <div aria-hidden className="bg-grid" />
         <div aria-hidden className="bg-grain" />
+        <PointerGlow />
         <ThemeProvider>
           <Navbar />
           {children}

@@ -22,13 +22,19 @@ const principles = [
 
 export default function HowIWork() {
   return (
-    <Section id="how" title="How I work" intro="What a team can expect from me.">
-      <ul className="grid gap-5 sm:grid-cols-2">
+    <Section id="how" index="05" title="How I work" intro="What a team can expect from me.">
+      <ul className="grid gap-4 sm:grid-cols-2">
         {principles.map((principle, index) => (
           <li key={principle.title}>
             <Reveal delay={0.06 * index} className="h-full">
-              <div className="glass-soft h-full rounded-2xl p-5">
-                <h3 className="font-display text-lg font-semibold">{principle.title}</h3>
+              <div className="glass-soft relative h-full overflow-hidden rounded-[1.6rem] p-6">
+                <span
+                  aria-hidden
+                  className="font-display text-4xl font-bold text-accent/20"
+                >
+                  0{index + 1}
+                </span>
+                <h3 className="mt-3 font-display text-lg font-semibold">{principle.title}</h3>
                 <p className="mt-2 leading-relaxed text-muted">{principle.text}</p>
               </div>
             </Reveal>

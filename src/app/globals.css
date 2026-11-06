@@ -2,21 +2,21 @@
 
 :root {
   color-scheme: light;
-  --bg: #e6eaf4;
+  --bg: #e8ecf6;
   --surface: #ffffff;
   --line: rgba(30, 41, 90, 0.14);
-  --fg: #0c1230;
+  --fg: #0b1028;
   --muted: #4a5478;
-  --accent: #4338ca;
+  --accent: #4f46e5;
   --accent-ink: #ffffff;
 
   --glass-bg: rgba(255, 255, 255, 0.58);
   --glass-soft: rgba(255, 255, 255, 0.5);
   --glass-border: rgba(255, 255, 255, 0.78);
   --glass-shadow: 0 8px 32px rgba(31, 41, 100, 0.12);
-  --orb-1: rgba(129, 140, 248, 0.58);
-  --orb-2: rgba(103, 232, 249, 0.48);
-  --orb-3: rgba(244, 168, 216, 0.5);
+  --orb-1: rgba(129, 140, 248, 0.62);
+  --orb-2: rgba(103, 232, 249, 0.42);
+  --orb-3: rgba(244, 168, 216, 0.48);
   --grain: rgba(15, 21, 53, 0.045);
 }
 
@@ -48,8 +48,8 @@
   --color-muted: var(--muted);
   --color-accent: var(--accent);
   --color-accent-ink: var(--accent-ink);
-  --font-display: var(--font-poppins), system-ui, sans-serif;
-  --font-sans: var(--font-poppins), system-ui, sans-serif;
+  --font-display: var(--font-bricolage), system-ui, sans-serif;
+  --font-sans: var(--font-public), system-ui, sans-serif;
 }
 
 html {
@@ -62,24 +62,33 @@ body {
   color: var(--fg);
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
+  overflow-x: clip;
 }
 
-/* Big panels: real glass blur. */
+::selection {
+  background: var(--accent);
+  color: var(--accent-ink);
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
 .glass {
   background: var(--glass-bg);
   border: 1px solid var(--glass-border);
   box-shadow: var(--glass-shadow);
-  -webkit-backdrop-filter: blur(16px) saturate(140%);
-  backdrop-filter: blur(16px) saturate(140%);
+  -webkit-backdrop-filter: blur(18px) saturate(150%);
+  backdrop-filter: blur(18px) saturate(150%);
 }
 
-/* Small cards inside panels: no blur (cheap), same frosted look. */
 .glass-soft {
   background: var(--glass-soft);
   border: 1px solid var(--glass-border);
 }
 
-/* Floating top bar: frosted glass with a shine line and a visible edge. */
 .nav-pill {
   position: relative;
   background: linear-gradient(180deg, rgba(255, 255, 255, 0.88), rgba(255, 255, 255, 0.62));
@@ -102,7 +111,6 @@ body {
     inset 0 -1px 0 rgba(255, 255, 255, 0.06);
 }
 
-/* Sliding highlight behind the active link */
 .nav-active {
   background: rgba(67, 56, 202, 0.12);
   box-shadow: inset 0 0 0 1px rgba(67, 56, 202, 0.25);
@@ -114,45 +122,79 @@ body {
 }
 
 @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
-
   .glass,
   .nav-pill {
     background: var(--surface);
   }
 }
 
-/* Static coloured light behind the glass. */
 .bg-orbs {
   position: fixed;
   inset: 0;
   z-index: -10;
   pointer-events: none;
+  overflow: hidden;
+}
+
+.bg-orbs::before,
+.bg-orbs::after {
+  content: "";
+  position: absolute;
+  inset: -20%;
   background:
     radial-gradient(42rem 42rem at 8% 0%, var(--orb-1), transparent 60%),
     radial-gradient(38rem 38rem at 95% 28%, var(--orb-2), transparent 60%),
     radial-gradient(44rem 44rem at 25% 100%, var(--orb-3), transparent 60%);
+  animation: orb-drift 18s ease-in-out infinite;
+}
+
+.bg-orbs::after {
+  opacity: 0.55;
+  animation-duration: 26s;
+  animation-direction: reverse;
+  filter: blur(30px);
+}
+
+.bg-grid {
+  position: fixed;
+  inset: 0;
+  z-index: -9;
+  pointer-events: none;
+  background-image:
+    linear-gradient(color-mix(in oklab, var(--fg) 6%, transparent) 1px, transparent 1px),
+    linear-gradient(90deg, color-mix(in oklab, var(--fg) 6%, transparent) 1px, transparent 1px);
+  background-size: 72px 72px;
+  mask-image: radial-gradient(ellipse 70% 60% at 50% 20%, black 20%, transparent 75%);
 }
 
 .bg-grain {
   position: fixed;
   inset: 0;
-  z-index: -9;
+  z-index: -8;
   pointer-events: none;
   background-image: radial-gradient(var(--grain) 0.6px, transparent 0.6px);
   background-size: 3px 3px;
 }
 
+.pointer-glow {
+  position: fixed;
+  inset: 0;
+  z-index: -7;
+  pointer-events: none;
+  transition: background 80ms linear;
+}
+
 .card-lift {
   transition:
-    transform 0.35s ease,
-    box-shadow 0.35s ease,
-    border-color 0.35s ease;
+    transform 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.4s ease,
+    border-color 0.4s ease;
 }
 
 .card-lift:hover {
-  transform: translateY(-4px);
+  transform: translateY(-6px);
   border-color: color-mix(in oklab, var(--accent) 45%, var(--glass-border));
-  box-shadow: 0 18px 40px color-mix(in oklab, var(--accent) 18%, transparent);
+  box-shadow: 0 22px 50px color-mix(in oklab, var(--accent) 18%, transparent);
 }
 
 .text-gradient {
@@ -162,13 +204,66 @@ body {
   color: transparent;
 }
 
-.avatar-ring {
-  box-shadow:
-    0 0 0 1px color-mix(in oklab, var(--accent) 35%, transparent),
-    0 0 28px color-mix(in oklab, var(--accent) 28%, transparent);
+.btn-primary {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
 }
 
-/* Theme switch ripple: the browser snapshots old and new page, we reveal the new one. */
+.btn-primary::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(120deg, transparent 20%, rgba(255, 255, 255, 0.35), transparent 80%);
+  transform: translateX(-120%);
+  transition: transform 0.7s ease;
+  z-index: -1;
+}
+
+.btn-primary:hover::after {
+  transform: translateX(120%);
+}
+
+.chip {
+  border: 1px solid var(--line);
+  background: color-mix(in oklab, var(--accent) 8%, transparent);
+}
+
+.kicker {
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.marquee-track {
+  animation: marquee 32s linear infinite;
+}
+
+.marquee-mask:hover .marquee-track {
+  animation-play-state: paused;
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes orb-drift {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(3%, 4%, 0) scale(1.08);
+  }
+}
+
 ::view-transition-old(root),
 ::view-transition-new(root) {
   animation: none;
@@ -183,17 +278,6 @@ body {
   z-index: 2;
 }
 
-::selection {
-  background: var(--accent);
-  color: var(--accent-ink);
-}
-
-:focus-visible {
-  outline: 2px solid var(--accent);
-  outline-offset: 3px;
-  border-radius: 6px;
-}
-
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
@@ -203,5 +287,12 @@ body {
   .card-lift:hover {
     transition: none;
     transform: none;
+  }
+
+  .bg-orbs::before,
+  .bg-orbs::after,
+  .marquee-track,
+  .btn-primary::after {
+    animation: none;
   }
 }

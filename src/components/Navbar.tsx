@@ -1,31 +1,30 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import {
-  AnimatePresence,
-  motion,
-  useMotionValueEvent,
-  useReducedMotion,
-  useScroll,
-} from "motion/react";
+import { AnimatePresence, motion } from "motion/react";
 import { ArrowUpRight, Menu, X } from "lucide-react";
 import { navLinks, site } from "@/data/site";
+import usePrefersReducedMotion from "@/hooks/usePrefersReducedMotion";
 import ThemeToggle from "./ThemeToggle";
 import TrackedLink from "./TrackedLink";
 
 export default function Navbar() {
-  const reduce = useReducedMotion();
+  const reduce = usePrefersReducedMotion();
   const [open, setOpen] = useState(false);
   const [hidden, setHidden] = useState(false);
   const [active, setActive] = useState("");
 
   // Hide the bar while scrolling down, bring it back while scrolling up.
-  const { scrollY } = useScroll();
-  useMotionValueEvent(scrollY, "change", (latest) => {
-    const previous = scrollY.getPrevious() ?? 0;
-    if (open) return;
-    setHidden(latest > previous && latest > 240);
-  });
+  useEffect(() => {
+    let previous = 0;
+    const onScroll = () => {
+      const latest = window.scrollY;
+      if (!open) setHidden(latest > previous && latest > 240);
+      previous = latest;
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, [open]);
 
   // Highlight the link of the section that is in view.
   useEffect(() => {
@@ -59,11 +58,10 @@ export default function Navbar() {
     : { href: `mailto:${site.email}`, label: "Hire me", event: "email_click" };
 
   return (
-    <motion.header
-      className="pointer-events-none sticky top-0 z-50 px-4 pt-4"
-      initial={reduce ? false : { y: -30, opacity: 0 }}
-      animate={{ y: hidden ? -110 : 0, opacity: 1 }}
-      transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] as const }}
+    <header
+      className={`pointer-events-none sticky top-0 z-50 px-4 pt-4 transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none ${
+        hidden ? "-translate-y-[110px]" : "translate-y-0"
+      }`}
     >
       <div className="pointer-events-auto relative mx-auto w-full max-w-md md:w-fit md:max-w-none">
         <nav
@@ -73,7 +71,7 @@ export default function Navbar() {
           {/* Name only */}
           <a
             href="#top"
-            className="rounded-full py-1 pr-2 text-sm font-semibold tracking-tight"
+            className="rounded-full py-1 pr-2 font-display text-sm font-semibold tracking-tight"
             aria-label={`${site.name}, back to top`}
           >
             {site.name}
@@ -184,6 +182,6 @@ export default function Navbar() {
           )}
         </AnimatePresence>
       </div>
-    </motion.header>
+    </header>
   );
 }

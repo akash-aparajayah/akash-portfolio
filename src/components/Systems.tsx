@@ -4,10 +4,11 @@ export default function Systems() {
   return (
     <Section
       id="systems"
+      index="02"
       title="Systems"
       intro="How I think about backend structure, shown on the multi-tenant project."
     >
-      <div className="glass-soft overflow-x-auto rounded-2xl p-4 md:p-6">
+      <div className="glass-soft overflow-x-auto rounded-[1.6rem] p-4 md:p-8">
         <svg
           viewBox="0 0 720 300"
           role="img"
@@ -26,14 +27,18 @@ export default function Systems() {
             >
               <path d="M0 0L10 5L0 10z" className="fill-accent" />
             </marker>
+            <linearGradient id="apiFill" x1="0" x2="1" y1="0" y2="1">
+              <stop offset="0%" stopColor="currentColor" stopOpacity="0.18" className="text-accent" />
+              <stop offset="100%" stopColor="currentColor" stopOpacity="0.05" className="text-accent" />
+            </linearGradient>
           </defs>
 
-          <rect x="20" y="110" width="110" height="60" rx="14" className="fill-bg/40 stroke-line" strokeWidth="1.5" />
+          <rect x="20" y="110" width="110" height="60" rx="16" className="fill-bg/50 stroke-line" strokeWidth="1.5" />
           <text x="75" y="145" textAnchor="middle" fontSize="14" className="fill-fg">
             Clients
           </text>
 
-          <rect x="190" y="90" width="170" height="100" rx="16" className="fill-accent/15 stroke-accent" strokeWidth="2" />
+          <rect x="190" y="90" width="170" height="100" rx="18" fill="url(#apiFill)" className="stroke-accent" strokeWidth="2" />
           <text x="275" y="128" textAnchor="middle" fontSize="15" fontWeight="600" className="fill-fg">
             API
           </text>
@@ -44,7 +49,7 @@ export default function Systems() {
             picks the region
           </text>
 
-          <rect x="470" y="30" width="230" height="90" rx="16" className="fill-bg/40 stroke-line" strokeWidth="1.5" />
+          <rect x="470" y="30" width="230" height="90" rx="18" className="fill-bg/50 stroke-line" strokeWidth="1.5" />
           <text x="585" y="68" textAnchor="middle" fontSize="14" className="fill-fg">
             Region: India
           </text>
@@ -52,7 +57,7 @@ export default function Systems() {
             PostgreSQL, tenants A and B
           </text>
 
-          <rect x="470" y="180" width="230" height="90" rx="16" className="fill-bg/40 stroke-line" strokeWidth="1.5" />
+          <rect x="470" y="180" width="230" height="90" rx="18" className="fill-bg/50 stroke-line" strokeWidth="1.5" />
           <text x="585" y="218" textAnchor="middle" fontSize="14" className="fill-fg">
             Region: Europe
           </text>
@@ -84,16 +89,16 @@ export default function Systems() {
         </svg>
       </div>
 
-      <ul className="mt-8 grid gap-6 text-[15px] leading-relaxed sm:grid-cols-3">
-        <li>
+      <ul className="mt-8 grid gap-4 text-[15px] leading-relaxed sm:grid-cols-3">
+        <li className="glass-soft rounded-2xl p-4">
           <p className="font-medium">One codebase</p>
           <p className="mt-1 text-muted">Every region runs the same code and the same migrations.</p>
         </li>
-        <li>
+        <li className="glass-soft rounded-2xl p-4">
           <p className="font-medium">Tenant at the edge</p>
           <p className="mt-1 text-muted">The API resolves the tenant first, so business logic stays simple.</p>
         </li>
-        <li>
+        <li className="glass-soft rounded-2xl p-4">
           <p className="font-medium">Data stays local</p>
           <p className="mt-1 text-muted">Each customer&apos;s data lives in its own region.</p>
         </li>

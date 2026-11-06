@@ -5,11 +5,11 @@ import Image from "next/image";
 import {
   motion,
   useMotionValue,
-  useReducedMotion,
   useSpring,
   useTransform,
 } from "motion/react";
 import { site } from "@/data/site";
+import usePrefersReducedMotion from "@/hooks/usePrefersReducedMotion";
 
 const initials = site.name
   .split(" ")
@@ -22,7 +22,7 @@ const FOCUS = "50% 15%";
 const RATIO = "4 / 5";
 
 export default function Avatar() {
-  const reduce = useReducedMotion();
+  const reduce = usePrefersReducedMotion();
   const [failed, setFailed] = useState(false);
 
   const px = useMotionValue(0);

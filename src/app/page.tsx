@@ -1,4 +1,5 @@
 import Hero from "@/components/Hero";
+import TechMarquee from "@/components/TechMarquee";
 import Work from "@/components/Work";
 import Systems from "@/components/Systems";
 import Skills from "@/components/Skills";
@@ -20,6 +21,7 @@ export default async function Home() {
       )}
       <main>
         <Hero years={years} />
+        <TechMarquee />
         <Work />
         <Systems />
         <Skills />

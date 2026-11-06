@@ -1,14 +1,17 @@
 "use client";
 
-import { motion, useReducedMotion } from "motion/react";
-import { Mail, MapPin, Phone } from "lucide-react";
+import { motion } from "motion/react";
+import { ArrowUpRight, Mail, MapPin, Phone } from "lucide-react";
 import { site } from "@/data/site";
 import { projects } from "@/data/projects";
+import usePrefersReducedMotion from "@/hooks/usePrefersReducedMotion";
 import Avatar from "./Avatar";
+import Magnetic from "./Magnetic";
 import TrackedLink from "./TrackedLink";
+import VisitCounter from "./VisitCounter";
 
 export default function Hero({ years }: { years: number }) {
-  const reduce = useReducedMotion();
+  const reduce = usePrefersReducedMotion();
 
   const stats = [
     { value: `${years}+`, label: "Years building" },
@@ -23,8 +26,8 @@ export default function Hero({ years }: { years: number }) {
           initial: { y: "105%" },
           animate: { y: 0 },
           transition: {
-            duration: 0.8,
-            delay: 0.1 + i * 0.12,
+            duration: 0.85,
+            delay: 0.08 + i * 0.12,
             ease: [0.22, 1, 0.36, 1] as const,
           },
         };
@@ -33,16 +36,24 @@ export default function Hero({ years }: { years: number }) {
     reduce
       ? {}
       : {
-          initial: { opacity: 0 },
-          animate: { opacity: 1 },
+          initial: { opacity: 0, y: 12 },
+          animate: { opacity: 1, y: 0 },
           transition: { duration: 0.6, delay },
         };
 
   return (
-    <section id="top" className="mx-auto max-w-5xl px-6 pb-8 pt-12 md:pt-20">
-      <div className="grid gap-12 lg:grid-cols-[1.25fr_1fr] lg:items-start">
+    <section id="top" className="mx-auto max-w-6xl px-6 pb-6 pt-10 md:pt-16">
+      <div className="grid gap-12 lg:grid-cols-[1.2fr_0.9fr] lg:items-start">
         <div>
-          <h1 className="font-display text-[clamp(2.5rem,6.5vw,4.75rem)] font-bold leading-[1.02] tracking-tight">
+          <motion.p
+            className="inline-flex items-center gap-2 rounded-full border border-line bg-surface/40 px-3 py-1.5 text-xs font-medium"
+            {...settle(0.05)}
+          >
+            <span aria-hidden className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
+            {site.availability}
+          </motion.p>
+
+          <h1 className="mt-6 font-display text-[clamp(2.7rem,7vw,5.4rem)] font-bold leading-[0.98] tracking-tight">
             {site.headlineLines.map((line, i) => (
               <span key={line} className="block overflow-hidden pb-1">
                 <motion.span className="block" {...rise(i)}>
@@ -56,20 +67,23 @@ export default function Hero({ years }: { years: number }) {
             ))}
           </h1>
 
-          <motion.div {...settle(0.7)}>
-            <p className="mt-8 max-w-md text-lg leading-relaxed text-muted">
+          <motion.div {...settle(0.65)}>
+            <p className="mt-8 max-w-lg text-lg leading-relaxed text-muted">
               {site.intro}
             </p>
 
-            <div className="mt-8 flex flex-wrap gap-4">
-              <TrackedLink
-                href={`mailto:${site.email}`}
-                event="email_click"
-                detail={{ from: "hero" }}
-                className="rounded-full bg-accent px-6 py-3 text-sm font-medium text-accent-ink transition-opacity hover:opacity-90"
-              >
-                Email me
-              </TrackedLink>
+            <div className="mt-9 flex flex-wrap items-center gap-3">
+              <Magnetic>
+                <TrackedLink
+                  href={`mailto:${site.email}`}
+                  event="email_click"
+                  detail={{ from: "hero" }}
+                  className="btn-primary inline-flex items-center gap-2 rounded-full bg-accent px-6 py-3 text-sm font-medium text-accent-ink shadow-lg shadow-accent/25 transition-opacity hover:opacity-90"
+                >
+                  Email me
+                  <ArrowUpRight size={16} aria-hidden />
+                </TrackedLink>
+              </Magnetic>
               {site.resume ? (
                 <TrackedLink
                   href={site.resume}
@@ -89,10 +103,10 @@ export default function Hero({ years }: { years: number }) {
               )}
             </div>
 
-            <dl className="mt-10 grid max-w-md grid-cols-3 gap-3">
+            <dl className="mt-10 grid max-w-lg grid-cols-3 gap-3">
               {stats.map((stat) => (
                 <div key={stat.label} className="glass-soft rounded-2xl p-4">
-                  <dd className="font-display text-3xl font-bold">
+                  <dd className="font-display text-3xl font-bold tracking-tight">
                     {stat.value}
                   </dd>
                   <dt className="mt-1 text-xs leading-snug text-muted">
@@ -101,6 +115,7 @@ export default function Hero({ years }: { years: number }) {
                 </div>
               ))}
             </dl>
+            <VisitCounter />
           </motion.div>
         </div>
 
@@ -108,13 +123,8 @@ export default function Hero({ years }: { years: number }) {
           <Avatar />
 
           <motion.div className="glass mt-8 rounded-3xl p-6" {...settle(0.8)}>
-            <p className="flex items-start gap-2 text-sm">
-              <span
-                aria-hidden
-                className="mt-1.5 h-2 w-2 shrink-0 rounded-full bg-emerald-500"
-              />
-              {site.availability}
-            </p>
+            <p className="kicker">Now</p>
+            <p className="mt-2 text-sm leading-relaxed">{site.role} · {site.location}</p>
 
             <ul className="mt-5 space-y-3 border-t border-line pt-5 text-sm">
               <li className="flex items-center gap-3">
