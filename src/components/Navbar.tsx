@@ -67,12 +67,14 @@ export default function Navbar() {
         <nav
           aria-label="Main"
           className="nav-pill flex h-14 items-center justify-between gap-2 rounded-full pl-5 pr-2.5"
+          suppressHydrationWarning
         >
           {/* Name only */}
           <a
             href="#top"
             className="rounded-full py-1 pr-2 font-display text-sm font-semibold tracking-tight"
             aria-label={`${site.name}, back to top`}
+            suppressHydrationWarning
           >
             {site.name}
           </a>

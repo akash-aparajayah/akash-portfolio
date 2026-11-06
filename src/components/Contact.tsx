@@ -14,7 +14,7 @@ export default function Contact() {
       <p className="mt-4 text-lg text-muted">{site.replyTime}</p>
 
       <div className="mt-10 grid gap-4 sm:grid-cols-2">
-        <div className="glass-soft rounded-[1.4rem] p-5">
+        <div className="glass-soft rounded-[1.4rem] p-5 transition-transform duration-500 hover:-translate-y-1">
           <p className="kicker">Email</p>
           <div className="mt-4 flex flex-wrap items-center gap-3">
             <Magnetic>
@@ -32,7 +32,7 @@ export default function Contact() {
           </div>
         </div>
 
-        <div className="glass-soft rounded-[1.4rem] p-5">
+        <div className="glass-soft rounded-[1.4rem] p-5 transition-transform duration-500 hover:-translate-y-1">
           <p className="kicker">Talk</p>
           <div className="mt-4 flex flex-wrap gap-4 text-sm">
             <TrackedLink

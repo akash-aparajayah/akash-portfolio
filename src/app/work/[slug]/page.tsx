@@ -72,7 +72,7 @@ export default async function WorkPage({
             </TrackedLink>
           )}
 
-          <dl className="mt-10 grid gap-8 text-[15px] leading-relaxed md:grid-cols-2">
+          <dl className="mt-10 grid gap-8 text-[15px] leading-relaxed md:grid-cols-2 [&>div]:transition-transform [&>div]:duration-500 [&>div]:hover:-translate-y-1">
             <div>
               <dt className="font-medium">Problem</dt>
               <dd className="mt-2 text-muted">{project.problem}</dd>

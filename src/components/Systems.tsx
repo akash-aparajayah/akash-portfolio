@@ -67,21 +67,21 @@ export default function Systems() {
 
           <path
             d="M130 140 L190 140"
-            className="stroke-accent"
+            className="flow-line stroke-accent"
             fill="none"
             strokeWidth="1.75"
             markerEnd="url(#arrow)"
           />
           <path
             d="M360 140 L415 140 L415 75 L470 75"
-            className="stroke-accent"
+            className="flow-line stroke-accent"
             fill="none"
             strokeWidth="1.75"
             markerEnd="url(#arrow)"
           />
           <path
             d="M360 140 L415 140 L415 225 L470 225"
-            className="stroke-accent"
+            className="flow-line stroke-accent"
             fill="none"
             strokeWidth="1.75"
             markerEnd="url(#arrow)"
@@ -90,15 +90,15 @@ export default function Systems() {
       </div>
 
       <ul className="mt-8 grid gap-4 text-[15px] leading-relaxed sm:grid-cols-3">
-        <li className="glass-soft rounded-2xl p-4">
+        <li className="glass-soft rounded-2xl p-4 transition-transform duration-500 hover:-translate-y-1">
           <p className="font-medium">One codebase</p>
           <p className="mt-1 text-muted">Every region runs the same code and the same migrations.</p>
         </li>
-        <li className="glass-soft rounded-2xl p-4">
+        <li className="glass-soft rounded-2xl p-4 transition-transform duration-500 hover:-translate-y-1">
           <p className="font-medium">Tenant at the edge</p>
           <p className="mt-1 text-muted">The API resolves the tenant first, so business logic stays simple.</p>
         </li>
-        <li className="glass-soft rounded-2xl p-4">
+        <li className="glass-soft rounded-2xl p-4 transition-transform duration-500 hover:-translate-y-1">
           <p className="font-medium">Data stays local</p>
           <p className="mt-1 text-muted">Each customer&apos;s data lives in its own region.</p>
         </li>

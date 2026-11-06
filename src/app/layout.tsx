@@ -1,10 +1,13 @@
 import type { Metadata, Viewport } from "next";
 import { Bricolage_Grotesque, Public_Sans } from "next/font/google";
+import Script from "next/script";
 import { Analytics } from "@vercel/analytics/next";
 import ThemeProvider from "@/components/ThemeProvider";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import PointerGlow from "@/components/PointerGlow";
+import ScrollProgress from "@/components/ScrollProgress";
+import CursorTrail from "@/components/CursorTrail";
 import { site } from "@/data/site";
 import "./globals.css";
 
@@ -60,10 +63,15 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       className={`${bricolage.variable} ${publicSans.variable}`}
     >
       <body suppressHydrationWarning>
+        <Script id="strip-cursor-refs" strategy="beforeInteractive">
+          {`(function(){function s(){document.querySelectorAll("[data-cursor-ref]").forEach(function(n){n.removeAttribute("data-cursor-ref")})}s();try{new MutationObserver(s).observe(document.documentElement,{subtree:true,attributes:true,attributeFilter:["data-cursor-ref"]})}catch(e){}})();`}
+        </Script>
         <div aria-hidden className="bg-orbs" />
         <div aria-hidden className="bg-grid" />
         <div aria-hidden className="bg-grain" />
         <PointerGlow />
+        <CursorTrail />
+        <ScrollProgress />
         <ThemeProvider>
           <Navbar />
           {children}

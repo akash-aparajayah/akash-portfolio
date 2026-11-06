@@ -14,7 +14,7 @@ export default function Skills() {
     >
       <div className="grid gap-4 md:grid-cols-3">
         <Reveal className="md:col-span-2">
-          <div className="relative h-full overflow-hidden rounded-[1.6rem] p-6 md:p-8 glass-soft">
+          <div className="glass-soft relative h-full overflow-hidden rounded-[1.6rem] p-6 md:p-8">
             <span
               aria-hidden
               className="pointer-events-none absolute -right-8 -top-10 font-display text-[8rem] font-bold leading-none text-accent/10"
@@ -27,7 +27,7 @@ export default function Skills() {
               {daily.items.map((item) => (
                 <li
                   key={item}
-                  className="rounded-full bg-accent px-3.5 py-1.5 text-sm font-medium text-accent-ink"
+                  className="skill-chip rounded-full bg-accent px-3.5 py-1.5 text-sm font-medium text-accent-ink"
                 >
                   {item}
                 </li>

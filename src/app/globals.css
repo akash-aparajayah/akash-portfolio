@@ -55,6 +55,8 @@
 html {
   scroll-behavior: smooth;
   scroll-padding-top: 6rem;
+  scrollbar-width: thin;
+  scrollbar-color: color-mix(in oklab, var(--accent) 70%, transparent) transparent;
 }
 
 body {
@@ -181,7 +183,100 @@ body {
   inset: 0;
   z-index: -7;
   pointer-events: none;
-  transition: background 80ms linear;
+}
+
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 60;
+  height: 2px;
+  width: 100%;
+  background: linear-gradient(90deg, var(--accent), #22d3ee, #f0abfc);
+  pointer-events: none;
+}
+
+.cursor-trail {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 55;
+  width: 18px;
+  height: 18px;
+  margin: -9px 0 0 -9px;
+  border: 1px solid color-mix(in oklab, var(--accent) 80%, white);
+  border-radius: 999px;
+  pointer-events: none;
+  mix-blend-mode: plus-lighter;
+  opacity: 0.55;
+}
+
+.spotlight {
+  --mx: 50%;
+  --my: 0%;
+  position: relative;
+}
+
+.spotlight::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(
+    240px circle at var(--mx) var(--my),
+    color-mix(in oklab, var(--accent) 18%, transparent),
+    transparent 62%
+  );
+  opacity: 0;
+  transition: opacity 0.45s ease;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.spotlight:hover::after {
+  opacity: 1;
+}
+
+.section-sheen {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    115deg,
+    transparent 0%,
+    color-mix(in oklab, var(--accent) 8%, transparent) 42%,
+    transparent 68%
+  );
+  transform: translateX(-40%);
+  animation: sheen-drift 14s ease-in-out infinite;
+}
+
+.pulse-dot {
+  width: 0.4rem;
+  height: 0.4rem;
+  border-radius: 999px;
+  background: #10b981;
+  box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.55);
+  animation: pulse-ring 2.2s ease-out infinite;
+}
+
+.skill-chip {
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s ease;
+}
+
+.skill-chip:hover {
+  transform: translateY(-3px) scale(1.04);
+  box-shadow: 0 10px 24px color-mix(in oklab, var(--accent) 30%, transparent);
+}
+
+.principle-card:hover span {
+  transform: translateX(6px) scale(1.08);
+  color: color-mix(in oklab, var(--accent) 40%, transparent);
+}
+
+.flow-line {
+  stroke-dasharray: 8 10;
+  animation: flow-dash 1.4s linear infinite;
 }
 
 .card-lift {
@@ -241,6 +336,11 @@ body {
   animation: marquee 32s linear infinite;
 }
 
+.marquee-track.reverse {
+  animation-direction: reverse;
+  animation-duration: 42s;
+}
+
 .marquee-mask:hover .marquee-track {
   animation-play-state: paused;
 }
@@ -261,6 +361,34 @@ body {
   }
   50% {
     transform: translate3d(3%, 4%, 0) scale(1.08);
+  }
+}
+
+@keyframes sheen-drift {
+  0%,
+  100% {
+    transform: translateX(-35%);
+  }
+  50% {
+    transform: translateX(25%);
+  }
+}
+
+@keyframes pulse-ring {
+  0% {
+    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.5);
+  }
+  70% {
+    box-shadow: 0 0 0 8px rgba(16, 185, 129, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
+  }
+}
+
+@keyframes flow-dash {
+  to {
+    stroke-dashoffset: -36;
   }
 }
 
@@ -292,7 +420,15 @@ body {
   .bg-orbs::before,
   .bg-orbs::after,
   .marquee-track,
-  .btn-primary::after {
+  .btn-primary::after,
+  .section-sheen,
+  .pulse-dot,
+  .flow-line {
     animation: none;
+  }
+
+  .cursor-trail,
+  .scroll-progress {
+    display: none;
   }
 }

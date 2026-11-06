@@ -62,13 +62,13 @@ export default function VisitCounter({
 
   return (
     <dl className="mt-3 grid max-w-lg grid-cols-2 gap-3">
-      <div className="glass-soft rounded-2xl p-4">
+      <div className="glass-soft rounded-2xl p-4 transition-transform duration-500 hover:-translate-y-1">
         <dd className="font-display text-3xl font-bold tracking-tight">
           {stats ? <Count value={stats.views} /> : "—"}
         </dd>
         <dt className="mt-1 text-xs leading-snug text-muted">Portfolio visits</dt>
       </div>
-      <div className="glass-soft rounded-2xl p-4">
+      <div className="glass-soft rounded-2xl p-4 transition-transform duration-500 hover:-translate-y-1">
         <dd className="font-display text-3xl font-bold tracking-tight">
           {stats ? <Count value={stats.visitors} /> : "—"}
         </dd>

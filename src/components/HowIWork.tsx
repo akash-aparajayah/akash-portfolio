@@ -27,10 +27,10 @@ export default function HowIWork() {
         {principles.map((principle, index) => (
           <li key={principle.title}>
             <Reveal delay={0.06 * index} className="h-full">
-              <div className="glass-soft relative h-full overflow-hidden rounded-[1.6rem] p-6">
+              <div className="principle-card glass-soft relative h-full overflow-hidden rounded-[1.6rem] p-6">
                 <span
                   aria-hidden
-                  className="font-display text-4xl font-bold text-accent/20"
+                  className="font-display text-4xl font-bold text-accent/20 transition-transform duration-500"
                 >
                   0{index + 1}
                 </span>
